@@ -1,8 +1,8 @@
 package com.nature.jt;
 
-import com.nature.data.DataFactory;
-import com.nature.data.feed.DataFeed;
-import com.nature.data.source.DataSource;
+import com.nature.jt.data.DataFactory;
+import com.nature.jt.data.feed.DataFeed;
+import com.nature.jt.data.source.DataSource;
 import com.google.common.eventbus.Subscribe;
 import com.nature.jt.strategy.Strategies;
 import com.nature.jt.strategy.Strategy;
@@ -70,11 +70,13 @@ public class SingleCerebra {
             this.master.registry(this);
 
             if(master.canAll()) {
+                log.debug("Post all bars...");
                 master.postAll();
             } else {
                 log.debug("Waiting for master's next bar...");
             }
         } else {
+            log.debug("For all bars now...");
             master.forAll(feeder::accept);
             evalOnce();
         }

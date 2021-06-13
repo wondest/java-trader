@@ -1,6 +1,6 @@
 package com.nature.jt.strategy;
 
-import com.nature.data.feed.DataSeries;
+import com.nature.jt.data.feed.DataSeries;
 
 /**
  * @ClassName Strategies

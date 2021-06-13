@@ -1,4 +1,4 @@
-package com.nature.data.source;
+package com.nature.jt.data.source;
 
 /**
  * @ClassName DataMaster

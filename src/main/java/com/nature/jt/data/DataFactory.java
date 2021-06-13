@@ -1,7 +1,7 @@
-package com.nature.data;
+package com.nature.jt.data;
 
-import com.nature.data.feed.DataFeed;
-import com.nature.data.source.DataSource;
+import com.nature.jt.data.feed.DataFeed;
+import com.nature.jt.data.source.DataSource;
 
 /**
  * @ClassName DataFactory

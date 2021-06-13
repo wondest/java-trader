@@ -1,10 +1,9 @@
-package com.nature.data;
+package com.nature.jt.data;
 
-import com.nature.data.feed.CsvDataFeed;
-import com.nature.data.feed.DataFeed;
-import com.nature.data.source.AbstractDataSource;
-import com.nature.data.source.DataSource;
-import com.nature.data.source.FlatFileDataSource;
+import com.nature.jt.data.feed.CsvDataFeed;
+import com.nature.jt.data.feed.DataFeed;
+import com.nature.jt.data.source.DataSource;
+import com.nature.jt.data.source.FlatFileDataSource;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

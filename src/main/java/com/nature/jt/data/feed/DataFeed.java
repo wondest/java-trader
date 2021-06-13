@@ -1,4 +1,4 @@
-package com.nature.data.feed;
+package com.nature.jt.data.feed;
 
 
 /**

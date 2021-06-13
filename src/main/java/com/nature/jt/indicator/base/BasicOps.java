@@ -1,4 +1,4 @@
-package com.nature.indicator.base;
+package com.nature.jt.indicator.base;
 
 import com.nature.jt.buffer.BoxDouble;
 import com.nature.jt.buffer.LineSingle;

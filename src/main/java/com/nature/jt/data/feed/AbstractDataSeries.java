@@ -1,4 +1,4 @@
-package com.nature.data.feed;
+package com.nature.jt.data.feed;
 
 import com.nature.jt.buffer.AbstractLines;
 import com.nature.jt.buffer.LineSingle;

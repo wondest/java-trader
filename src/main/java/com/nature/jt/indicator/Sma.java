@@ -1,9 +1,9 @@
-package com.nature.indicator;
+package com.nature.jt.indicator;
 
 
 import com.nature.jt.buffer.LineSingle;
-import com.nature.indicator.base.BasicOps;
-import com.nature.indicator.base.Indicators;
+import com.nature.jt.indicator.base.BasicOps;
+import com.nature.jt.indicator.base.Indicators;
 
 /**
  * @ClassName Sma

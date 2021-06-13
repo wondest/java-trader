@@ -1,7 +1,6 @@
-package com.nature.data.source;
+package com.nature.jt.data.source;
 
 import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
 import org.apache.log4j.Logger;
 
 import java.util.function.Consumer;

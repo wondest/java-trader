@@ -1,7 +1,7 @@
-package com.nature.indicator.base;
+package com.nature.jt.indicator.base;
 
 import com.nature.jt.buffer.LineSingle;
-import com.nature.indicator.Indicator;
+import com.nature.jt.indicator.Indicator;
 
 import java.util.stream.IntStream;
 
