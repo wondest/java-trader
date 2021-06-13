@@ -1,4 +1,4 @@
-package com.nature.data;
+package com.nature.data.source;
 
 import java.util.function.Consumer;
 
@@ -10,7 +10,7 @@ import java.util.function.Consumer;
  * @Version 1.0
  * @Since 1.8
  **/
-public interface DataSource {
+public interface DataSource<T> {
     /**
      *
      * Feed all data once when the datasource is positive.
@@ -18,22 +18,20 @@ public interface DataSource {
      * @condition Positive
      * @param feed
      */
-    void forAll(Consumer<String> feed);
+    void forAll(Consumer<T> feed);
 
     /**
      * Start to post all data immediately.
-     *
-     * @condition Positive && Event
      */
     void postAll();
 
     /**
-     * Start to post one data immediately.
+     * Start to post a data one by one.
      *
      * @condition Event
      * @param oneBar
      */
-    void post(String oneBar);
+    void post(T oneBar);
 
     /**
      * Registry the subscriber.
@@ -47,11 +45,17 @@ public interface DataSource {
 
 
     /**
-     * Decide the provider is positive or not.
+     * Can use postAll or forAll.
      *
      * @return true when the datasource is positive.
      */
-    boolean isPositive();
+    boolean canAll();
+
+    /**
+     * The dataSource is passive or not.
+     * @return
+     */
+    boolean isPassive();
 
     /**
      * Start action

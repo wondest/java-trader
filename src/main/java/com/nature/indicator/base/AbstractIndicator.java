@@ -1,8 +1,8 @@
 package com.nature.indicator.base;
 
-import com.nature.buffer.BoxDouble;
-import com.nature.buffer.LineBuffer;
-import com.nature.buffer.LineSingle;
+import com.nature.jt.buffer.BoxDouble;
+import com.nature.jt.buffer.LineBuffer;
+import com.nature.jt.buffer.LineSingle;
 import com.nature.indicator.Indicator;
 
 import java.util.ArrayList;

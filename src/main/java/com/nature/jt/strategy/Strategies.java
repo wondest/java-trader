@@ -1,7 +1,6 @@
-package com.nature.strategy;
+package com.nature.jt.strategy;
 
-import com.nature.buffer.LineSingle;
-import com.nature.feed.DataSeries;
+import com.nature.data.feed.DataSeries;
 
 /**
  * @ClassName Strategies
@@ -11,20 +10,21 @@ import com.nature.feed.DataSeries;
  * @Version 1.0
  * @Since 1.8
  **/
-
 public abstract class Strategies {
-
+    /**
+     * The meta class for a strategy.
+     */
     public static abstract class ClsStrategy {
         /**
-         * create the Strategy instance.
+         * create a strategy.
          * @param data
          * @return
          */
         abstract public Strategy make (DataSeries...data);
 
         /**
-         * The min number of data for the strategy.
-         * @return the min data
+         * The min number of the necessary datas for a strategy.
+         * @return
          */
         abstract public int minData ();
     }

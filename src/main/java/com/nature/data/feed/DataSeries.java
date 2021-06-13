@@ -1,11 +1,10 @@
-package com.nature.feed;
+package com.nature.data.feed;
 
-import com.nature.buffer.AbstractLines;
-import com.nature.buffer.LineMultiple;
-import com.nature.buffer.LineSingle;
+import com.nature.jt.buffer.LineMultiple;
+import com.nature.jt.buffer.LineSingle;
 
 /**
- * @ClassName AbstractDataFeed
+ * @ClassName DataSeries
  * @Description: TODO
  * @Author Tender
  * @Time 2021/5/26 21:34

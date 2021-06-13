@@ -1,12 +1,10 @@
-package com.nature.data;
+package com.nature.data.source;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.function.Consumer;
-
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -17,12 +15,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @Version 1.0
  * @Since 1.8
  **/
-public class FlatFileData extends AbstractDataSource.Vector {
-
+public class FlatFileDataSource extends AbstractDataSource.Persister<String> {
+    /**
+     * 源文件
+     */
     private final String fileName;
+
+    /**
+     * 文件读取对象
+     */
     private BufferedReader reader;
 
-    public FlatFileData(String fileName) {
+    public FlatFileDataSource(String fileName) {
         this.fileName = fileName;
     }
 

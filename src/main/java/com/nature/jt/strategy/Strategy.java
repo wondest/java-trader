@@ -1,4 +1,4 @@
-package com.nature.strategy;
+package com.nature.jt.strategy;
 
 /**
  * @ClassName Strategy
@@ -10,12 +10,12 @@ package com.nature.strategy;
  **/
 public interface Strategy {
     /**
-     * Run the strategy.
+     * Run the strategy using all bars once.
      */
     public void evalOnce();
 
     /**
-     * Run the strategy with the bar.
+     * Run the strategy using a bar one by one.
      */
     public void evalNext();
 }

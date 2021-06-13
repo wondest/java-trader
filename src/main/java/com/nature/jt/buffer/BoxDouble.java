@@ -1,4 +1,4 @@
-package com.nature.buffer;
+package com.nature.jt.buffer;
 
 import java.math.BigDecimal;
 import java.util.function.BinaryOperator;

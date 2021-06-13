@@ -1,7 +1,7 @@
 package com.nature.indicator;
 
-import com.nature.buffer.BoxDouble;
-import com.nature.buffer.LineSingle;
+import com.nature.jt.buffer.BoxDouble;
+import com.nature.jt.buffer.LineSingle;
 import com.nature.indicator.base.BasicOps;
 import com.nature.indicator.base.Indicators;
 

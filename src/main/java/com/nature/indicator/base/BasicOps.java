@@ -1,7 +1,7 @@
 package com.nature.indicator.base;
 
-import com.nature.buffer.BoxDouble;
-import com.nature.buffer.LineSingle;
+import com.nature.jt.buffer.BoxDouble;
+import com.nature.jt.buffer.LineSingle;
 
 /**
  * @ClassName BasicOps

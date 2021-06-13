@@ -1,13 +1,14 @@
-import com.nature.SingleCerebra;
-import com.nature.feed.DataSeries;
+import com.nature.data.LocalCsvDataFactory;
+import com.nature.jt.SingleCerebra;
+import com.nature.data.feed.DataSeries;
 import com.nature.indicator.CrossOver;
 import com.nature.indicator.Indicator;
 import com.nature.indicator.Sma;
-import com.nature.strategy.Strategies;
-import com.nature.strategy.Strategy;
-import com.nature.buffer.LineSingle;
-import com.nature.data.DataMaster;
-import com.nature.data.DataSource;
+import com.nature.jt.strategy.Strategies;
+import com.nature.jt.strategy.Strategy;
+import com.nature.jt.buffer.LineSingle;
+import com.nature.data.source.DataMaster;
+import com.nature.data.source.DataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,16 +86,12 @@ public class TestStrategy {
     }
 
     public static void main(String[] args) {
-        DataSource ds1 = DataMaster.makeCsvEvent("src/test/resources/trade_000001.SZ.csv");
-        DataSource ds2 = DataMaster.makeChainedEvent(ds1);
+        LocalCsvDataFactory factory = new LocalCsvDataFactory("src/test/resources/trade_000001.SZ.csv");
 
-        SingleCerebra cerebra = new SingleCerebra();
-
-        cerebra.attachData(ds1);
-
-        cerebra.addStrategy(new MyStrategy());
-
-        cerebra.flow().run();
+        SingleCerebra.builder()
+                .setFactory(factory)
+                .build()
+                .run();
 
         System.out.println("================");
     }

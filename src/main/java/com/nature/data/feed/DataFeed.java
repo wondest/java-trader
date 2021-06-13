@@ -1,7 +1,5 @@
-package com.nature.feed;
+package com.nature.data.feed;
 
-
-import java.util.function.Consumer;
 
 /**
  * @ClassName DataFeed
@@ -11,7 +9,7 @@ import java.util.function.Consumer;
  * @Version 1.0
  * @Since 1.8
  **/
-public interface DataFeed {
+public interface DataFeed<T> {
     /**
      * Get data
      * @return
@@ -19,9 +17,9 @@ public interface DataFeed {
     public DataSeries getData();
 
     /**
-     * Consume data
+     * Feed data
      * @param oneBar
      * @return
      */
-    public boolean accept(String oneBar);
+    public boolean accept(T oneBar);
 }

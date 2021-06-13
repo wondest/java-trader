@@ -1,4 +1,4 @@
-package com.nature.buffer;
+package com.nature.jt.buffer;
 
 import java.util.Collection;
 import java.util.stream.Stream;

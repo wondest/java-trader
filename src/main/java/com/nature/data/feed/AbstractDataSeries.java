@@ -1,7 +1,7 @@
-package com.nature.feed;
+package com.nature.data.feed;
 
-import com.nature.buffer.AbstractLines;
-import com.nature.buffer.LineSingle;
+import com.nature.jt.buffer.AbstractLines;
+import com.nature.jt.buffer.LineSingle;
 
 /**
  * @ClassName AbstractDataFeed

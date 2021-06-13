@@ -1,6 +1,6 @@
 package com.nature.indicator;
 
-import com.nature.buffer.LineSingle;
+import com.nature.jt.buffer.LineSingle;
 
 /**
  * @ClassName Indicator

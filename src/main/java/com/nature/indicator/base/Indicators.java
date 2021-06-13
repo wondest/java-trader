@@ -1,6 +1,6 @@
 package com.nature.indicator.base;
 
-import com.nature.buffer.LineSingle;
+import com.nature.jt.buffer.LineSingle;
 import com.nature.indicator.Indicator;
 
 import java.util.stream.IntStream;

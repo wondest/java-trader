@@ -1,4 +1,4 @@
-package com.nature.buffer;
+package com.nature.jt.buffer;
 
 /**
  * 多线的基础接口
@@ -6,7 +6,7 @@ package com.nature.buffer;
  */
 public interface LineMultiple extends LineSeries<BoxDouble> {
     /**
-     *  获取Multiple中的LineBuffer
+     *  获取指定的线
      *
      * @param order
      * @return

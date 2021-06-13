@@ -1,7 +1,6 @@
-package com.nature.feed;
+package com.nature.data.feed;
 
-
-import com.nature.buffer.BoxDouble;
+import com.nature.jt.buffer.BoxDouble;
 
 /**
  * @ClassName CsvDataFeed
@@ -11,7 +10,7 @@ import com.nature.buffer.BoxDouble;
  * @Version 1.0
  * @Since 1.8
  **/
-public class CsvDataFeed extends AbstractDataSeries implements DataFeed {
+public class CsvDataFeed extends AbstractDataSeries implements DataFeed<String> {
     private final int headers;
     private final String separator;
 
