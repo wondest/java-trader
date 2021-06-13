@@ -1,7 +1,7 @@
 package com.nature.feed;
 
 
-import com.nature.buffer.BufferUtil;
+import com.nature.buffer.BoxDouble;
 
 /**
  * @ClassName CsvDataFeed
@@ -37,7 +37,7 @@ public class CsvDataFeed extends AbstractDataSeries implements DataFeed {
     private boolean doProcess(String line) {
         String[] fields = line.split(separator);
 
-        close().append(BufferUtil.valueOf(fields[1]));
+        close().append(BoxDouble.valueOf(fields[1]));
 
         return true;
     }

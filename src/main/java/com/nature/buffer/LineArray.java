@@ -4,11 +4,11 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 /**
- *
+ * 基本数组的接口
  *
  * @author Tender
  */
-public interface LineVector<E> {
+public interface LineArray<E> {
     /**
      * 返回Vector的元素个数
      *
@@ -58,10 +58,10 @@ public interface LineVector<E> {
      * @param c
      * @return
      */
-    public boolean addAll(Collection<E> c);
+    public boolean append(Collection<E> c);
 
     /**
-     * 获取Vector指定区间的子序列引用
+     * 获取Vector指定区间的子序列引用或者副本
      * @param startInclusive
      * @param endExclusive
      * @return

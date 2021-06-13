@@ -97,7 +97,7 @@ public abstract class AbstractDataSource implements DataSource {
     }
 
     /**
-     * 代理型的数据源
+     * 代理型的数据源,代理一个数据源,让它可以发布数据
      *
      * @functionable post,registry
      * @functionable the original dataSource's function

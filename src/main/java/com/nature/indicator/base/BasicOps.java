@@ -1,10 +1,7 @@
 package com.nature.indicator.base;
 
-import com.nature.buffer.BufferUtil;
+import com.nature.buffer.BoxDouble;
 import com.nature.buffer.LineSingle;
-
-import java.math.BigDecimal;
-import java.util.stream.Stream;
 
 /**
  * @ClassName BasicOps
@@ -37,14 +34,14 @@ public class BasicOps {
 
         @Override
         protected void doEvalNext() {
-            doEvalOnce(barIdx());
+            doEvalOnce(barIndex());
         }
 
         @Override
         protected void doEvalOnce(int i) {
             set(i, data0.slice(i-period()+1, i+1)
-                      .reduce(BigDecimal.ZERO, BigDecimal::add)
-                      .divide(BufferUtil.valueOf(period()), BigDecimal.ROUND_HALF_UP));
+                      .reduce(BoxDouble.ZERO, BoxDouble::add)
+                      .div(BoxDouble.valueOf(period())));
         }
     }
 
@@ -63,12 +60,12 @@ public class BasicOps {
 
         @Override
         protected void onceStart(int startInclusive, int endExclusive) {
-            this.set(startInclusive, data0.get(startInclusive).subtract(data1.get(startInclusive)));
+            this.set(startInclusive, data0.get(startInclusive).sub(data1.get(startInclusive)));
         }
 
         @Override
         protected void nextStart() {
-            setBar(data0.getBar().subtract(data1.getBar()));
+            setBar(data0.getBar().sub(data1.getBar()));
         }
 
         @Override
@@ -78,14 +75,14 @@ public class BasicOps {
 
         @Override
         protected void doEvalNext() {
-            doEvalOnce(barIdx());
+            doEvalOnce(barIndex());
         }
 
         @Override
         protected void doEvalOnce(int i) {
-            BigDecimal prev = get(i-1);
-            BigDecimal diff = data0.get(i).subtract(data1.get(i));
-            set(i, diff.compareTo(BigDecimal.ZERO)==0?prev:diff);
+            BoxDouble prev = get(i-1);
+            BoxDouble diff = data0.get(i).sub(data1.get(i));
+            set(i, diff.compareTo(BoxDouble.ZERO)==0?prev:diff);
         }
     }
 }

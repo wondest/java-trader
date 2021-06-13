@@ -1,26 +1,25 @@
 package com.nature.buffer;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- * @ClassName LineData
- * @Description: TODO
+ * @ClassName LineBuffer
+ * @Description:
  * @Author Tender
  * @Time 2021/5/23 15:43
  * @Version 1.0
  * @Since 1.8
  **/
-public class LineBuffer extends ArrayVector implements LineSingle {
+public class LineBuffer extends ArrayBuffer implements LineSingle {
     private int barLength;
     private int barIndex;
 
     private static final int RESET_BAR_INDEX = -1;
     private static final int RESET_BAR_LENGTH = 0;
 
-    private static final BigDecimal EMPTY_VALUE = null;
+    private static final BoxDouble EMPTY_VALUE = null;
 
     private String name;
 
@@ -59,17 +58,17 @@ public class LineBuffer extends ArrayVector implements LineSingle {
         IntStream.range(0, size).forEach(i->forward());
     }
 
-    private void forward(BigDecimal value, int size) {
+    private void forward(BoxDouble value, int size) {
         this.barIndex += size;
         this.barLength += size;
 
         if(1 >= size) {
             IntStream.range(0, size).forEach(i -> append(value));
         } else {
-            BigDecimal[] values = new BigDecimal[size];
+            BoxDouble[] values = new BoxDouble[size];
             IntStream.range(0, size).forEach(i -> values[i]=value);
 
-            addAll(Arrays.asList(values));
+            append(Arrays.asList(values));
         }
     }
 
@@ -111,27 +110,27 @@ public class LineBuffer extends ArrayVector implements LineSingle {
     }
 
     @Override
-    public void setBar(int offset, BigDecimal item) {
+    public void setBar(int offset, BoxDouble item) {
         set(base(offset), item);
     }
 
     @Override
-    public void setBar(BigDecimal item) {
+    public void setBar(BoxDouble item) {
         setBar(0, item);
     }
 
     @Override
-    public BigDecimal getBar(int offset) {
+    public BoxDouble getBar(int offset) {
         return get(base(offset));
     }
 
     @Override
-    public BigDecimal getBar() {
+    public BoxDouble getBar() {
         return get(base(0));
     }
 
     @Override
-    public Stream<BigDecimal> between(int startInclusive, int endExclusive) {
+    public Stream<BoxDouble> between(int startInclusive, int endExclusive) {
         return slice(startInclusive, endExclusive);
     }
 
@@ -146,7 +145,7 @@ public class LineBuffer extends ArrayVector implements LineSingle {
     }
 
     @Override
-    public int barIdx() {
+    public int barIndex() {
         return barIndex;
     }
 
@@ -154,7 +153,7 @@ public class LineBuffer extends ArrayVector implements LineSingle {
     public String toString() {
         StringBuffer sb = new StringBuffer();
 
-        sb.append(name).append(":").append("[BigDecimal").append("(").append(size()).append(")");
+        sb.append(name).append(":").append("[BoxDouble").append("(").append(size()).append(")");
         IntStream.range(0, size()).forEach(i->sb.append(",(").append(i).append(")").append(get(i)));
         sb.append("]");
 

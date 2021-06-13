@@ -5,11 +5,11 @@ import java.util.stream.Stream;
 
 /**
  *
- * 基于时间序列的Bar的接口实现
+ * 时间序列的接口
  *
  * @author Tender
  */
-public interface LineSeries {
+public interface LineSeries<E> {
     /**
      * 返回Buffer中的bar的长度
      *
@@ -28,7 +28,7 @@ public interface LineSeries {
      * 返回Buffer中的bar的当前指针
      * @return
      */
-    public int barIdx();
+    public int barIndex();
 
     /**
      * 重置Bar指针
@@ -89,26 +89,26 @@ public interface LineSeries {
      * @param offset
      * @param item
      */
-    public void setBar(int offset, BigDecimal item);
+    public void setBar(int offset, E item);
 
     /**
      * 设置当前Bar指针的Bar元素
      * @param item
      */
-    public void setBar(BigDecimal item);
+    public void setBar(E item);
 
     /**
      * 获取当前Bar指针偏移offset的Bar元素
      * @param offset
      * @return
      */
-    public BigDecimal getBar(int offset);
+    public E getBar(int offset);
 
     /**
      * 获取当前Bar指针的Bar元素
      * @return
      */
-    public BigDecimal getBar();
+    public E getBar();
 
     /**
      * 获取指定当前Bar指定区间的所有Bar元素
@@ -116,5 +116,5 @@ public interface LineSeries {
      * @param endExclusive
      * @return
      */
-    public Stream<BigDecimal> between(int startInclusive, int endExclusive);
+    public Stream<E> between(int startInclusive, int endExclusive);
 }

@@ -20,6 +20,7 @@ public interface DataFeed {
 
     /**
      * Consume data
+     * @param oneBar
      * @return
      */
     public boolean accept(String oneBar);

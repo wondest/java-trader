@@ -1,6 +1,5 @@
 package com.nature.buffer;
 
-import java.math.BigDecimal;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -8,24 +7,34 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * @ClassName LineData
- * @Description: TODO
+ * @ClassName AbstractLines
+ * @Description: 多线的抽象父类
  * @Author Tender
  * @Time 2021/5/23 15:43
  * @Version 1.0
  * @Since 1.8
  **/
 public abstract class AbstractLines implements LineMultiple {
+    /**
+     * The array of the values.
+     */
     private LineBuffer[] lines;
+
+    /**
+     * The size of the line array.
+     */
     private int lineSize;
 
-    private LineBuffer lineMaster;
+    /**
+     * The master line within the line array.
+     */
+    private LineBuffer master;
 
     public AbstractLines(int lineSize) {
+        this.lineSize = lineSize;
         this.lines = new LineBuffer[lineSize];
         IntStream.range(0, lineSize).forEach(i -> this.lines[i] = new LineBuffer());
-        this.lineMaster = lines[0];
-        this.lineSize = lineSize;
+        this.master = lines[0];
     }
 
     public AbstractLines(String[] lineAlias) {
@@ -35,7 +44,7 @@ public abstract class AbstractLines implements LineMultiple {
         this.lineSize = lineAlias.length;
         this.lines = new LineBuffer[lineSize];
         IntStream.range(0, lineSize).forEach(i -> this.lines[i] = new LineBuffer(lineAlias[i]));
-        this.lineMaster = lines[0];
+        this.master = lines[0];
     }
 
     @Override
@@ -69,23 +78,23 @@ public abstract class AbstractLines implements LineMultiple {
     }
 
     @Override
-    public void setBar(int offset, BigDecimal item) {
+    public void setBar(int offset, BoxDouble item) {
         IntStream.range(0, lineSize).forEach(i->lines[i].setBar(offset, item));
     }
 
     @Override
-    public void setBar(BigDecimal item) {
+    public void setBar(BoxDouble item) {
         IntStream.range(0, lineSize).forEach(i->lines[i].setBar(item));
     }
 
     @Override
-    public BigDecimal getBar(int offset) {
+    public BoxDouble getBar(int offset) {
         return lines[0].getBar(offset);
     }
 
     @Override
-    public Stream<BigDecimal> between(int startInclusive, int endExclusive) {
-        return lineMaster.slice(startInclusive, endExclusive);
+    public Stream<BoxDouble> between(int startInclusive, int endExclusive) {
+        return master.slice(startInclusive, endExclusive);
     }
 
     @Override
@@ -114,22 +123,22 @@ public abstract class AbstractLines implements LineMultiple {
     }
 
     @Override
-    public BigDecimal getBar() {
-        return lineMaster.getBar();
+    public BoxDouble getBar() {
+        return master.getBar();
     }
 
     @Override
     public int barLen() {
-        return lineMaster.barLen();
+        return master.barLen();
     }
 
     @Override
     public int bufLen() {
-        return lineMaster.bufLen();
+        return master.bufLen();
     }
 
     @Override
-    public int barIdx() {
-        return lineMaster.barIdx();
+    public int barIndex() {
+        return master.barIndex();
     }
 }

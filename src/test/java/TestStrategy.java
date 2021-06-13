@@ -85,7 +85,7 @@ public class TestStrategy {
     }
 
     public static void main(String[] args) {
-        DataSource ds1 = DataMaster.makeCsvEvent("src/main/resources/trade_000001.SZ.csv");
+        DataSource ds1 = DataMaster.makeCsvEvent("src/test/resources/trade_000001.SZ.csv");
         DataSource ds2 = DataMaster.makeChainedEvent(ds1);
 
         SingleCerebra cerebra = new SingleCerebra();

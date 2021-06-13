@@ -1,20 +1,22 @@
 package com.nature.buffer;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Stream;
 
 /**
- * @ClassName AbstractList
- * @Description: TODO
+ * @ClassName BufferArray
+ * @Description: 基本的向量操作
  * @Author Tender
  * @Time 2021/5/23 15:41
  * @Version 1.0
  * @Since 1.8
  **/
-public class ArrayVector implements LineVector<BigDecimal> {
-    private ArrayList<BigDecimal> array = new ArrayList<BigDecimal>();
+public class ArrayBuffer implements LineArray<BoxDouble> {
+    /**
+     *
+     */
+    private ArrayList<BoxDouble> array = new ArrayList<BoxDouble>();
 
     @Override
     public int size() {
@@ -22,17 +24,17 @@ public class ArrayVector implements LineVector<BigDecimal> {
     }
 
     @Override
-    public BigDecimal set(int index, BigDecimal element) {
+    public BoxDouble set(int index, BoxDouble element) {
         return array.set(index, element);
     }
 
     @Override
-    public BigDecimal set(int index, double element) {
-        return set(index, BigDecimal.valueOf(element));
+    public BoxDouble set(int index, double element) {
+        return set(index, BoxDouble.valueOf(element));
     }
 
     @Override
-    public BigDecimal get(int index) {
+    public BoxDouble get(int index) {
         return array.get(index);
     }
 
@@ -42,17 +44,17 @@ public class ArrayVector implements LineVector<BigDecimal> {
     }
 
     @Override
-    public boolean append(BigDecimal element) {
+    public boolean append(BoxDouble element) {
         return array.add(element);
     }
 
     @Override
-    public boolean addAll(Collection<BigDecimal> c) {
+    public boolean append(Collection<BoxDouble> c) {
         return array.addAll(c);
     }
 
     @Override
-    public Stream<BigDecimal> slice(int startInclusive, int endExclusive) {
+    public Stream<BoxDouble> slice(int startInclusive, int endExclusive) {
         return array.subList(startInclusive, endExclusive).stream();
     }
 }

@@ -1,10 +1,9 @@
 package com.nature.indicator;
 
+import com.nature.buffer.BoxDouble;
 import com.nature.buffer.LineSingle;
 import com.nature.indicator.base.BasicOps;
 import com.nature.indicator.base.Indicators;
-
-import java.math.BigDecimal;
 
 /**
  * @ClassName CrossOver
@@ -27,12 +26,12 @@ public class CrossOver extends Indicators.Eval implements Indicator {
 
     @Override
     protected void doEvalOnce(int i) {
-        set(i, data0.get(i).subtract(data1.get(i)));
+        set(i, data0.get(i).sub(data1.get(i)));
     }
 
     @Override
     protected void doEvalNext() {
-        doEvalOnce(barIdx());
+        doEvalOnce(barIndex());
     }
 
     @Override
@@ -63,7 +62,7 @@ public class CrossOver extends Indicators.Eval implements Indicator {
 
         @Override
         protected void onceStart(int startInclusive, int endExclusive) {
-            set(startInclusive, BigDecimal.ZERO);
+            set(startInclusive, BoxDouble.ZERO);
         }
 
         @Override
@@ -72,8 +71,8 @@ public class CrossOver extends Indicators.Eval implements Indicator {
             boolean isAbove = false;
 
             //-1, 0, or 1 as this BigDecimal is numerically less than, equal to, or greater than val.
-            int beforeCompared = nzd.get(i-1).compareTo(BigDecimal.ZERO);
-            int afterCompared = data0.get(i).subtract(data1.get(i)).compareTo(BigDecimal.ZERO);
+            int beforeCompared = nzd.get(i-1).compareTo(BoxDouble.ZERO);
+            int afterCompared = data0.get(i).sub(data1.get(i)).compareTo(BoxDouble.ZERO);
 
             if(isCrossUp) {
                 isBelow = (beforeCompared == -1);
@@ -88,7 +87,7 @@ public class CrossOver extends Indicators.Eval implements Indicator {
 
         @Override
         protected void nextStart() {
-            setBar(BigDecimal.ZERO);
+            setBar(BoxDouble.ZERO);
         }
 
         @Override
@@ -98,7 +97,7 @@ public class CrossOver extends Indicators.Eval implements Indicator {
 
         @Override
         protected void doEvalNext() {
-            doEvalOnce(barIdx());
+            doEvalOnce(barIndex());
         }
     }
 

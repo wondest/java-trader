@@ -1,10 +1,10 @@
 package com.nature.indicator.base;
 
+import com.nature.buffer.BoxDouble;
 import com.nature.buffer.LineBuffer;
 import com.nature.buffer.LineSingle;
 import com.nature.indicator.Indicator;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -176,17 +176,17 @@ public abstract class AbstractIndicator implements Indicator {
     }
 
     @Override
-    public BigDecimal set(int index, BigDecimal element) {
+    public BoxDouble set(int index, BoxDouble element) {
         return line.set(index, element);
     }
 
     @Override
-    public BigDecimal set(int index, double element) {
+    public BoxDouble set(int index, double element) {
         return line.set(index, element);
     }
 
     @Override
-    public BigDecimal get(int index) {
+    public BoxDouble get(int index) {
         return line.get(index);
     }
 
@@ -196,22 +196,22 @@ public abstract class AbstractIndicator implements Indicator {
     }
 
     @Override
-    public boolean append(BigDecimal element) {
+    public boolean append(BoxDouble element) {
         return line.append(element);
     }
 
     @Override
-    public boolean addAll(Collection<BigDecimal> c) {
-        return line.addAll(c);
+    public boolean append(Collection<BoxDouble> c) {
+        return line.append(c);
     }
 
     @Override
-    public Stream<BigDecimal> slice(int startInclusive, int endExclusive) {
+    public Stream<BoxDouble> slice(int startInclusive, int endExclusive) {
         return line.slice(startInclusive, endExclusive);
     }
 
     @Override
-    public Stream<BigDecimal> between(int startInclusive, int endExclusive) {
+    public Stream<BoxDouble> between(int startInclusive, int endExclusive) {
         return line.between(startInclusive, endExclusive);
     }
 
@@ -246,12 +246,12 @@ public abstract class AbstractIndicator implements Indicator {
     }
 
     @Override
-    public void setBar(int offset, BigDecimal item) {
+    public void setBar(int offset, BoxDouble item) {
         line.setBar(offset, item);
     }
 
     @Override
-    public void setBar(BigDecimal item) {
+    public void setBar(BoxDouble item) {
         line.setBar(item);
     }
 
@@ -276,12 +276,12 @@ public abstract class AbstractIndicator implements Indicator {
     }
 
     @Override
-    public BigDecimal getBar() {
+    public BoxDouble getBar() {
         return line.getBar();
     }
 
     @Override
-    public BigDecimal getBar(int offset) {
+    public BoxDouble getBar(int offset) {
         return line.getBar(offset);
     }
 
@@ -296,8 +296,8 @@ public abstract class AbstractIndicator implements Indicator {
     }
 
     @Override
-    public int barIdx() {
-        return line.barIdx();
+    public int barIndex() {
+        return line.barIndex();
     }
 
     @Override
