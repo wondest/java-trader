@@ -1,7 +1,7 @@
 package com.nature.jt.indicator.base;
 
 import com.nature.jt.buffer.BoxDouble;
-import com.nature.jt.buffer.LineBuffer;
+import com.nature.jt.buffer.BufferSupport;
 import com.nature.jt.buffer.LineSingle;
 import com.nature.jt.indicator.Indicator;
 
@@ -12,52 +12,55 @@ import java.util.stream.Stream;
 
 /**
  * @ClassName IndicatorSeries
- * @Description: TODO
+ * @Description: 组合模式
  * @Author Tender
  * @Time 2021/5/23 15:58
  * @Version 1.0
  * @Since 1.8
  **/
-public abstract class AbstractIndicator implements Indicator {
+public abstract class AbstractIndComposite implements Indicator {
     /**
-     *
+     * The children indicators.
      */
     private List<Indicator> indicators;
 
     /**
-     *
+     * The line of the indicator.
      */
     private LineSingle line;
 
     /**
-     *
+     * The period of the indicator.
      */
     private int period;
 
     /**
-     *
+     * The clock of the indicator.
      */
     private final LineSingle clock;
 
     /**
-     *
+     * The line is a binding by a child indicator or self's evaluation.
      */
     private boolean isBinding;
 
+    /**
+     * The identity of the indicator, for logging.
+     */
     private String name;
 
-    AbstractIndicator(String name, int period, final LineSingle clock, boolean isBinding) {
+    AbstractIndComposite(String name, int period, final LineSingle clock, boolean isBinding) {
         this.name = name;
         this.period = period;
         this.clock = clock;
         this.isBinding = isBinding;
         this.indicators = new ArrayList<Indicator>();
 
-        //如果使用Binding,那么结果由sub indicator绑定结果,否则结果由本指标进行计算得到
+        //如果使用Binding,那么结果由children indicator绑定结果,否则结果由本指标进行计算得到
         if(isBinding) {
             this.line = null;
         } else {
-            this.line = LineBuffer.makeData();
+            this.line = BufferSupport.newLine();
         }
     }
 
@@ -72,39 +75,39 @@ public abstract class AbstractIndicator implements Indicator {
     @Override
     public void evalOnce() {
         //self binding
-        onceBinding();
+        bindLine();
 
         //self forward
         onceForward();
 
-        //subs evaluate
+        //children's evaluation
         indicators.stream().forEach(i->i.evalOnce());
 
-        //self evaluate
-        oncePre(0, period-1);
-        onceStart(period-1, period);
+        //self evaluation
+        onceBefore(0, period-1);
+        onceFirst(period-1, period);
         onceRemaining(period, clock.size());
     }
 
     @Override
     public void evalNext() {
         if (clock.barLen() == 1) {
-            onceBinding();
+            bindLine();
         }
 
         //self forward
         nextForward();
 
-        //subs evaluate
+        //children's evaluation
         indicators.stream().forEach(i->i.evalNext());
 
-        //self evaluate
-        if(clock.barLen() > period()) {
+        //self evaluation
+        if(clock.barLen() > period) {
             nextRemaining();
-        } else if (clock.barLen() == period()) {
-            nextStart();
+        } else if (clock.barLen() == period) {
+            nextFirst();
         } else {
-            nextPre();
+            nextBefore();
         }
     }
 
@@ -113,27 +116,40 @@ public abstract class AbstractIndicator implements Indicator {
      * @param startInclusive
      * @param endExclusive
      */
-    protected abstract void oncePre(int startInclusive, int endExclusive);
+    protected abstract void onceBefore(int startInclusive, int endExclusive);
 
     /**
-     * 启动处理
+     * 启动处理第一个元素
      * @param startInclusive
      * @param endExclusive
      */
-    protected abstract void onceStart(int startInclusive, int endExclusive);
+    protected abstract void onceFirst(int startInclusive, int endExclusive);
 
     /**
-     * 启动后处理
+     * 启动处理后续元素
      * @param startInclusive
      * @param endExclusive
      */
     protected abstract void onceRemaining(int startInclusive, int endExclusive);
 
+    /**
+     * 启动前处理
+     */
+    protected abstract void nextBefore();
 
-    protected abstract void nextPre();
-    protected abstract void nextStart();
+    /**
+     * 启动处理第一个元素
+     */
+    protected abstract void nextFirst();
+
+    /**
+     * 启动处理后续元素
+     */
     protected abstract void nextRemaining();
 
+    /**
+     * 推进一个Bar
+     */
     private void nextForward() {
         //确保比时钟走的慢
         if(!isBinding && clock.barLen() > line.barLen()) {
@@ -141,6 +157,9 @@ public abstract class AbstractIndicator implements Indicator {
         }
     }
 
+    /**
+     * 根据时钟一次性推进所有Bar
+     */
     private void onceForward() {
         if(!isBinding) {
             line.forward(clock.size());
@@ -148,9 +167,12 @@ public abstract class AbstractIndicator implements Indicator {
         }
     }
 
-    private void onceBinding() {
+    /**
+     * 绑定当前的Line
+     */
+    private void bindLine() {
         if(isBinding) {
-            line = bindLine();
+            line = proxyLine();
         }
     }
 
@@ -158,7 +180,7 @@ public abstract class AbstractIndicator implements Indicator {
      *
      * @return
      */
-    abstract protected LineSingle bindLine();
+    abstract protected LineSingle proxyLine();
 
     @Override
     public LineSingle getLine() {

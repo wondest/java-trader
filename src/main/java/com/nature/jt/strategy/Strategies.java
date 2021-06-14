@@ -20,12 +20,12 @@ public abstract class Strategies {
          * @param data
          * @return
          */
-        abstract public Strategy make (DataSeries...data);
+        abstract public Strategy make(DataSeries...data);
 
         /**
          * The min number of the necessary datas for a strategy.
          * @return
          */
-        abstract public int minData ();
+        abstract public int minData();
     }
 }

@@ -14,18 +14,17 @@ import java.util.stream.IntStream;
  * @Since 1.8
  **/
 public class Indicators {
-
     /**
      * 非绑定类指标
      */
-    private abstract static class NoneBinding extends AbstractIndicator {
+    private abstract static class NoneBinding extends AbstractIndComposite {
 
         NoneBinding(String name, int period, LineSingle clock) {
             super(name, period, clock, false);
         }
 
         @Override
-        public LineSingle bindLine() {
+        public LineSingle proxyLine() {
             return null;
         }
     }
@@ -33,19 +32,18 @@ public class Indicators {
     /**
      * 绑定类指标
      */
-    abstract static class Binding extends AbstractIndicator {
-
+    private abstract static class Binding extends AbstractIndComposite {
         Binding (String name, int period, LineSingle clock) {
             super(name, period, clock, true);
         }
 
         @Override
-        protected void oncePre(int startInclusive, int endExclusive) {
+        protected void onceBefore(int startInclusive, int endExclusive) {
             dummyOperation();
         }
 
         @Override
-        protected void onceStart(int startInclusive, int endExclusive) {
+        protected void onceFirst(int startInclusive, int endExclusive) {
             dummyOperation();
         }
 
@@ -55,12 +53,12 @@ public class Indicators {
         }
 
         @Override
-        protected void nextPre() {
+        protected void nextBefore() {
             dummyOperation();
         }
 
         @Override
-        protected void nextStart() {
+        protected void nextFirst() {
             dummyOperation();
         }
 
@@ -70,7 +68,7 @@ public class Indicators {
         }
 
         private void dummyOperation() {
-            //Do Nothing
+            //do nothing
         }
     }
 
@@ -83,12 +81,12 @@ public class Indicators {
         }
 
         @Override
-        protected void oncePre(int startInclusive, int endExclusive) {
+        protected void onceBefore(int startInclusive, int endExclusive) {
             //
         }
 
         @Override
-        protected void onceStart(int startInclusive, int endExclusive) {
+        protected void onceFirst(int startInclusive, int endExclusive) {
             doEvalOnce(startInclusive);
         }
 
@@ -98,12 +96,12 @@ public class Indicators {
         }
 
         @Override
-        protected void nextPre() {
+        protected void nextBefore() {
             //
         }
 
         @Override
-        protected void nextStart() {
+        protected void nextFirst() {
 
         }
 
@@ -124,7 +122,6 @@ public class Indicators {
          *
          */
         protected abstract void doEvalNext();
-
     }
 
     /**
@@ -132,16 +129,16 @@ public class Indicators {
      */
     public abstract static class Proxy extends Binding {
         //Binding: line
-        LineSingle bindling;
+        private LineSingle binding;
 
         public Proxy(String name, int period, Indicator indicator) {
             super(name, period, indicator);
-            this.bindling = addIndicator(indicator);
+            this.binding = addIndicator(indicator);
         }
 
         @Override
-        public LineSingle bindLine() {
-            return bindling;
+        public LineSingle proxyLine() {
+            return binding;
         }
     }
 }

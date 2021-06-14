@@ -159,11 +159,4 @@ public class LineBuffer extends ArrayBuffer implements LineSingle {
 
         return sb.toString();
     }
-
-    public static LineSingle makeData() {
-        return new LineBuffer();
-    }
-    public static LineSingle makeData(String name) {
-        return new LineBuffer(name);
-    }
 }

@@ -23,7 +23,7 @@ public class BasicOps {
         }
 
         @Override
-        protected void nextStart() {
+        protected void nextFirst() {
             doEvalNext();
         }
 
@@ -59,12 +59,12 @@ public class BasicOps {
         }
 
         @Override
-        protected void onceStart(int startInclusive, int endExclusive) {
+        protected void onceFirst(int startInclusive, int endExclusive) {
             this.set(startInclusive, data0.get(startInclusive).sub(data1.get(startInclusive)));
         }
 
         @Override
-        protected void nextStart() {
+        protected void nextFirst() {
             setBar(data0.getBar().sub(data1.getBar()));
         }
 

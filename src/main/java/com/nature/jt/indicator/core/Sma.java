@@ -1,4 +1,4 @@
-package com.nature.jt.indicator;
+package com.nature.jt.indicator.core;
 
 
 import com.nature.jt.buffer.LineSingle;

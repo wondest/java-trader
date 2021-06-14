@@ -4,7 +4,7 @@ import com.nature.jt.buffer.LineSingle;
 
 /**
  * @ClassName Indicator
- * @Description: TODO
+ * @Description: 指标类接口
  * @Author Tender
  * @Time 2021/5/23 15:57
  * @Version 1.0
@@ -12,24 +12,24 @@ import com.nature.jt.buffer.LineSingle;
  **/
 public interface Indicator extends LineSingle {
     /**
-     *
+     * Get the period of the indicator.
      * @return
      */
-    public int period();
+    int period();
 
     /**
-     *
+     * Evaluate all once.
      */
-    public void evalOnce();
+    void evalOnce();
 
     /**
-     *
+     * Evaluate one by one.
      */
-    public void evalNext();
+    void evalNext();
 
     /**
-     *
+     * Get the inner line in the indicator.
      * @return
      */
-    public LineSingle getLine();
+    LineSingle getLine();
 }

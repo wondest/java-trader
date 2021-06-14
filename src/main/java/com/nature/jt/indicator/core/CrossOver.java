@@ -1,7 +1,8 @@
-package com.nature.jt.indicator;
+package com.nature.jt.indicator.core;
 
 import com.nature.jt.buffer.BoxDouble;
 import com.nature.jt.buffer.LineSingle;
+import com.nature.jt.indicator.Indicator;
 import com.nature.jt.indicator.base.BasicOps;
 import com.nature.jt.indicator.base.Indicators;
 
@@ -35,7 +36,7 @@ public class CrossOver extends Indicators.Eval implements Indicator {
     }
 
     @Override
-    protected void nextStart() {
+    protected void nextFirst() {
         doEvalNext();
     }
 
@@ -61,7 +62,7 @@ public class CrossOver extends Indicators.Eval implements Indicator {
         }
 
         @Override
-        protected void onceStart(int startInclusive, int endExclusive) {
+        protected void onceFirst(int startInclusive, int endExclusive) {
             set(startInclusive, BoxDouble.ZERO);
         }
 
@@ -86,7 +87,7 @@ public class CrossOver extends Indicators.Eval implements Indicator {
         }
 
         @Override
-        protected void nextStart() {
+        protected void nextFirst() {
             setBar(BoxDouble.ZERO);
         }
 
