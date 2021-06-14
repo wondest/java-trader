@@ -2,8 +2,8 @@ package com.nature.jt.indicator.core;
 
 
 import com.nature.jt.buffer.LineSingle;
-import com.nature.jt.indicator.base.BasicOps;
-import com.nature.jt.indicator.base.Indicators;
+import com.nature.jt.indicator.base.BasicIndicators;
+import com.nature.jt.indicator.base.AbstractIndicators;
 
 /**
  * @ClassName Sma
@@ -13,14 +13,14 @@ import com.nature.jt.indicator.base.Indicators;
  * @Version 1.0
  * @Since 1.8
  **/
-public class Sma extends Indicators.Proxy {
+public class Sma extends AbstractIndicators.Proxy {
     /**
-     *
+     * 输入的源数据
      */
-    LineSingle data0;
+    private final LineSingle data0;
 
     public Sma(int period, LineSingle data0) {
-        super("Sma_" + period, period, new BasicOps.Average(period, data0));
+        super("Sma_" + period, period, new BasicIndicators.Average(period, data0));
         this.data0 = data0;
     }
 }

@@ -3,20 +3,27 @@ package com.nature.jt.indicator.core;
 import com.nature.jt.buffer.BoxDouble;
 import com.nature.jt.buffer.LineSingle;
 import com.nature.jt.indicator.Indicator;
-import com.nature.jt.indicator.base.BasicOps;
-import com.nature.jt.indicator.base.Indicators;
+import com.nature.jt.indicator.base.BasicIndicators;
+import com.nature.jt.indicator.base.AbstractIndicators;
 
 /**
  * @ClassName CrossOver
- * @Description: TODO
+ * @Description: 交叉指标计算，1表示上穿，-1表示下穿，0表示未交叉
  * @Author Tender
  * @Time 2021/5/23 16:38
  * @Version 1.0
  * @Since 1.8
  **/
-public class CrossOver extends Indicators.Eval implements Indicator {
-    LineSingle data0;
-    LineSingle data1;
+public class CrossOver extends AbstractIndicators.Eval implements Indicator {
+    /**
+     * 输入的源数据
+     */
+    private final LineSingle data0;
+
+    /**
+     * 输入的源数据
+     */
+    private final LineSingle data1;
 
     public CrossOver(Indicator ind0, Indicator ind1) {
         super("CrossOver", Math.max(ind0.period(), ind1.period()), ind0);
@@ -45,17 +52,34 @@ public class CrossOver extends Indicators.Eval implements Indicator {
         doEvalNext();
     }
 
-    private static class CrossBase extends Indicators.Eval {
+    /**
+     * 基础的交叉指标 1-交叉 0-未交叉
+     */
+    private static class CrossBase extends AbstractIndicators.Eval {
+        /**
+         * 计算指标
+         */
         private Indicator nzd;
-        private LineSingle data0;
-        private LineSingle data1;
 
+        /**
+         * 输入的源数据
+         */
+        private final LineSingle data0;
+
+        /**
+         * 输入的源数据
+         */
+        private final LineSingle data1;
+
+        /**
+         * 上穿标识
+         */
         private boolean isCrossUp;
 
         CrossBase(int period, LineSingle data0, LineSingle data1, boolean isCrossUp) {
             super("CrossBase", period, data0);
 
-            this.nzd = addIndicator(new BasicOps.NonZeroDifference(period, data0, data1));
+            this.nzd = addIndicator(new BasicIndicators.NonZeroDifference(period, data0, data1));
             this.data0 = data0;
             this.data1 = data1;
             this.isCrossUp = isCrossUp;
@@ -83,7 +107,7 @@ public class CrossOver extends Indicators.Eval implements Indicator {
                 isBelow = (afterCompared == -1);
             }
 
-            set(i, isBelow & isBelow?1.0:0.0);
+            set(i, isBelow & isBelow?BoxDouble.ONE:BoxDouble.ZERO);
         }
 
         @Override
@@ -102,7 +126,10 @@ public class CrossOver extends Indicators.Eval implements Indicator {
         }
     }
 
-    private static class CrossUp extends Indicators.Proxy {
+    /**
+     * 上穿交叉指标 1-交叉 0-未交叉
+     */
+    private static class CrossUp extends AbstractIndicators.Proxy {
         CrossUp(int period, LineSingle data0, LineSingle data1) {
             super("CrossUp", period, new CrossBase(period, data0, data1, true));
         }
@@ -112,7 +139,10 @@ public class CrossOver extends Indicators.Eval implements Indicator {
         }
     }
 
-    private static class CrossDown extends Indicators.Proxy {
+    /**
+     * 下穿交叉指标 1-交叉 0-未交叉
+     */
+    private static class CrossDown extends AbstractIndicators.Proxy {
         CrossDown(int period, LineSingle data0, LineSingle data1) {
             super("CrossDown", period, new CrossBase(period, data0, data1, false));
         }

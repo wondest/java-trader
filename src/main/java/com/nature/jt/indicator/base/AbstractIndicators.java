@@ -7,18 +7,17 @@ import java.util.stream.IntStream;
 
 /**
  * @ClassName Indicators
- * @Description: TODO
+ * @Description: 继承自AbstractIndComposite,分为绑定类和非绑定类
  * @Author Tender
  * @Time 2021/5/23 16:12
  * @Version 1.0
  * @Since 1.8
  **/
-public class Indicators {
+public class AbstractIndicators {
     /**
      * 非绑定类指标
      */
     private abstract static class NoneBinding extends AbstractIndComposite {
-
         NoneBinding(String name, int period, LineSingle clock) {
             super(name, period, clock, false);
         }
@@ -73,7 +72,7 @@ public class Indicators {
     }
 
     /**
-     *  计算类指标
+     *  计算类指标: 这里给出一部分默认实现，如果有需要则在子类中重写该方法
      */
     public abstract static class Eval extends NoneBinding {
         public Eval(String name, int period, LineSingle clock) {
@@ -82,7 +81,7 @@ public class Indicators {
 
         @Override
         protected void onceBefore(int startInclusive, int endExclusive) {
-            //
+            //overwrite in child, if need
         }
 
         @Override
@@ -97,17 +96,17 @@ public class Indicators {
 
         @Override
         protected void nextBefore() {
-            //
+            //overwrite in child, if need
         }
 
         @Override
         protected void nextFirst() {
-
+            //overwrite in child, if need
         }
 
         @Override
         protected void nextRemaining() {
-            //
+            //overwrite in child, if need
         }
 
         /**

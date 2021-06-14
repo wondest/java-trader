@@ -1,6 +1,7 @@
 package com.nature.jt.buffer;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.BinaryOperator;
 
 /**
@@ -18,10 +19,19 @@ public final class BoxDouble extends Number implements Comparable<BoxDouble> {
     public static final BoxDouble NaN = new BoxDouble(true);
 
     /**
-     * The value of ZERO.
+     * The value constant 0.
      */
     public static final BoxDouble ZERO = new BoxDouble(BigDecimal.ZERO);
 
+    /**
+     * The value constant 1.
+     */
+    public static final BoxDouble ONE = new BoxDouble(BigDecimal.ONE);
+
+    /**
+     * The value constant -1.
+     */
+    private static final BoxDouble NEGATIVE_ONE = new BoxDouble(new BigDecimal(BigInteger.valueOf(-1)));
 
     /**
      * The value of the Double.

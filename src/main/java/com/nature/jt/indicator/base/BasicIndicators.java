@@ -4,18 +4,22 @@ import com.nature.jt.buffer.BoxDouble;
 import com.nature.jt.buffer.LineSingle;
 
 /**
- * @ClassName BasicOps
- * @Description: TODO
+ * @ClassName BasicIndicators
+ * @Description: 基础指标计算
  * @Author Tender
  * @Time 2021/5/23 16:20
  * @Version 1.0
  * @Since 1.8
  **/
-public class BasicOps {
-
-    public static class Average extends Indicators.Eval {
-        //Input: data
-        LineSingle data0;
+public class BasicIndicators {
+    /**
+     * 计算移动平均指标
+     */
+    public static class Average extends AbstractIndicators.Eval {
+        /**
+         * 输入的源数据
+         */
+        private final LineSingle data0;
 
         public Average(int period, LineSingle data0) {
             super("Average_" + period, period, data0);
@@ -45,12 +49,19 @@ public class BasicOps {
         }
     }
 
-    public static class NonZeroDifference extends Indicators.Eval {
-        //Input: data
-        LineSingle data0;
+    /**
+     * 计算非零差异指标
+     */
+    public static class NonZeroDifference extends AbstractIndicators.Eval {
+        /**
+         * 输入的源数据0
+         */
+        private final LineSingle data0;
 
-        //Input: data
-        LineSingle data1;
+        /**
+         * 输入的源数据1
+         */
+        private final LineSingle data1;
 
         public NonZeroDifference(int period, LineSingle data0, LineSingle data1) {
             super("nzd", period, data0);
