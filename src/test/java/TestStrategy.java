@@ -90,9 +90,12 @@ public class TestStrategy {
         DataFactory factory2 = new MockExchangeFactory("src/test/resources/trade_000001.SZ.csv");
 
         SingleCerebra.builder()
-                .setFactory(factory2).flow().build()
+                .setFactory(factory2)
+                .flow()
+                .addStrategy(new MyStrategy())
+                .build()
                 .run();
 
-        System.out.println("================");
+        System.out.println("======= Mission Completed! =======");
     }
 }

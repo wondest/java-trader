@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @Version 1.0
  * @Since 1.8
  **/
-public abstract class AbstractDataSource<T> implements DataSource<T> {
+public abstract class AbstractDataSource implements DataSource {
     private static Logger log = Logger.getLogger(AbstractDataSource.class);
 
     /**
@@ -25,14 +25,14 @@ public abstract class AbstractDataSource<T> implements DataSource<T> {
      *
      * @function forAll
      */
-    public abstract static class Persister<T> extends AbstractDataSource<T> {
+    public abstract static class Persist extends AbstractDataSource {
         @Override
         public void postAll() {
             throw new UnsupportedOperationException("Persister's postAll is not supported");
         }
 
         @Override
-        public void post(T oneBar) {
+        public void post(Object oneBar) {
             throw new UnsupportedOperationException("Persister's post is not supported");
         }
 
@@ -58,7 +58,7 @@ public abstract class AbstractDataSource<T> implements DataSource<T> {
      * @function post
      * @function registry
      */
-    private abstract static class Publisher<T> extends AbstractDataSource<T> {
+    public abstract static class Publish extends AbstractDataSource {
         /**
          * A brief name for this dataSource, for logging purposes.
          */
@@ -69,13 +69,14 @@ public abstract class AbstractDataSource<T> implements DataSource<T> {
          */
         private EventBus eventBus;
 
-        Publisher(String name) {
+        Publish(String name) {
             this.name = checkNotNull(name, "name shoud not be null");
             this.eventBus = new EventBus(name);
         }
 
         @Override
-        public void post(T oneBar) {
+        public void post(Object oneBar) {
+            log.debug("Post one bar:" + oneBar);
             eventBus.post(oneBar);
         }
 
@@ -98,7 +99,7 @@ public abstract class AbstractDataSource<T> implements DataSource<T> {
      * @function postAll
      * @function forAll
      */
-    public static class Proxy<T> extends Publisher<T> {
+    public abstract static class Proxy extends Publish {
         /**
          * Original dataSource
          */
@@ -110,7 +111,7 @@ public abstract class AbstractDataSource<T> implements DataSource<T> {
         }
 
         @Override
-        public void forAll(Consumer<T> feed) {
+        public void forAll(Consumer feed) {
             dataSource.forAll(feed);
         }
 
@@ -143,56 +144,4 @@ public abstract class AbstractDataSource<T> implements DataSource<T> {
             dataSource.stop();
         }
     }
-
-//    /**
-//     * 链式数据源,允许注册订阅,并订阅其他数据源,代理父数据源的基本操作
-//     *
-//     * @functionable post,registry,postAll
-//     * @Subscribe
-//     */
-//    public static class ChainedEvent<T> extends Publisher<T> {
-//        /**
-//         *
-//         */
-//        private DataSource upsource;
-//
-//        ChainedEvent(String name, DataSource upsource) {
-//            super(name);
-//            this.upsource = upsource;
-//        }
-//
-//        @Subscribe
-//        protected void receive(Object barObj) {
-//            post((T)barObj);
-//        }
-//
-//        @Override
-//        public void forAll(Consumer<T> feed) {
-//            throw new UnsupportedOperationException("ChainedEvent's forEach is not supported");
-//        }
-//
-//        @Override
-//        public void postAll() {
-//            if(isPositive()) {
-//                upsource.forAll(oneBar -> post(oneBar));
-//            } else {
-//                upsource.postAll();
-//            }
-//        }
-//
-//        @Override
-//        public void start() {
-//            upsource.start();
-//        }
-//
-//        @Override
-//        public void stop() {
-//            upsource.stop();
-//        }
-//
-//        @Override
-//        public boolean isPositive() {
-//            return false;
-//        }
-//    }
 }

@@ -10,7 +10,7 @@ import java.util.function.Consumer;
  * @Version 1.0
  * @Since 1.8
  **/
-public interface DataSource<T> {
+public interface DataSource {
     /**
      *
      * Feed all data once when the datasource is positive.
@@ -18,7 +18,7 @@ public interface DataSource<T> {
      * @condition Positive
      * @param feed
      */
-    void forAll(Consumer<T> feed);
+    void forAll(Consumer feed);
 
     /**
      * Start to post all data immediately.
@@ -31,7 +31,7 @@ public interface DataSource<T> {
      * @condition Event
      * @param oneBar
      */
-    void post(T oneBar);
+    void post(Object oneBar);
 
     /**
      * Registry the subscriber.

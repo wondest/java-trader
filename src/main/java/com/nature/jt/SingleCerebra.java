@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * @ClassName StrategyEngine
+ * @ClassName SingleCerebra
  * @Description: 单数据源的策略计算引擎
  * @Author Tender
  * @Time 2021/5/30 18:43
@@ -31,7 +31,7 @@ public class SingleCerebra {
     /**
      * The main dataSource.
      */
-    private DataSource<String> master;
+    private DataSource master;
 
     /**
      * if flow is true then evaluate one by one,els evaluate all once.
@@ -57,12 +57,18 @@ public class SingleCerebra {
         return flow;
     }
 
+    /**
+     * Check the necessary conditions.
+     */
     private void check() {
         checkNotNull(master, "master shoud not be null, please check");
         checkNotNull(feeder, "feeder shoud not be null, please check");
         checkNotNull(runStrats, "runStrats shoud not be null, please check");
     }
 
+    /**
+     * Run all strategies.
+     */
     public void run() {
         check();
 
@@ -82,11 +88,17 @@ public class SingleCerebra {
         }
     }
 
+    /**
+     * Evaluate all bars once.
+     */
     private void evalOnce() {
         runStrats.stream().parallel().forEach(s->s.evalOnce());
     }
 
-    private void evalFlow(String oneBar) {
+    /**
+     * Evaluate a bars one by one.
+     */
+    private void evalNext(String oneBar) {
         if(feeder.accept(oneBar)) {
             feeder.getData().advance();
             runStrats.stream().parallel().forEach(s -> s.evalNext());
@@ -95,14 +107,13 @@ public class SingleCerebra {
 
     @Subscribe
     private void receive(String oneBar) {
-        evalFlow(oneBar);
+        evalNext(oneBar);
     }
 
     /**
      * The builder for the cerebra.
      * @return
      */
-
     public static SingleCerebra builder() {
         return new SingleCerebra();
     }
@@ -112,19 +123,30 @@ public class SingleCerebra {
         return this;
     }
 
+    /**
+     * Add strategies.
+     * @param clsStrategy
+     * @return
+     */
     public SingleCerebra addStrategy(Strategies.ClsStrategy clsStrategy) {
         this.clsStrats.add(clsStrategy);
         return this;
     }
 
+    /**
+     * flow flag.
+     * @return
+     */
     public SingleCerebra flow() {
         this.flow = true;
         return this;
     }
 
     public SingleCerebra build() {
-        //create data
+        //create dataSource
         this.master = factory.createSource();
+
+        //create dataFeed
         this.feeder = factory.createFeed();
 
         //initialize the strategies

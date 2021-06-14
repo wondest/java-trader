@@ -5,7 +5,7 @@ import com.nature.jt.data.source.DataSource;
 
 /**
  * @ClassName DataFactory
- * @Description: TODO
+ * @Description: 数据工厂类, feed 和 source 使用了泛型，实际运行时候会进行类型擦除，在转换的时候要能够匹配上
  * @Author Tender
  * @Time 2021/6/13 22:22
  * @Version 1.0

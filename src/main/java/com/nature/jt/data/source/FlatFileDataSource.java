@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @Version 1.0
  * @Since 1.8
  **/
-public class FlatFileDataSource extends AbstractDataSource.Persister<String> {
+public class FlatFileDataSource extends AbstractDataSource.Persist {
     /**
      * 源文件
      */
@@ -72,7 +72,7 @@ public class FlatFileDataSource extends AbstractDataSource.Persister<String> {
     }
 
     @Override
-    public void forAll(Consumer<String> feed) {
+    public void forAll(Consumer feed) {
         String ret;
         start();
         while(null != (ret = read())) {

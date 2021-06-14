@@ -19,7 +19,7 @@ public class LineBuffer extends ArrayBuffer implements LineSingle {
     private static final int RESET_BAR_INDEX = -1;
     private static final int RESET_BAR_LENGTH = 0;
 
-    private static final BoxDouble EMPTY_VALUE = null;
+    private static final BoxDouble EMPTY_VALUE = BoxDouble.NaN;
 
     private String name;
 

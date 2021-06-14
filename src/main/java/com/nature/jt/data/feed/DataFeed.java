@@ -9,7 +9,7 @@ package com.nature.jt.data.feed;
  * @Version 1.0
  * @Since 1.8
  **/
-public interface DataFeed<T> {
+public interface DataFeed {
     /**
      * Get data
      * @return
@@ -21,5 +21,5 @@ public interface DataFeed<T> {
      * @param oneBar
      * @return
      */
-    public boolean accept(T oneBar);
+    public boolean accept(Object oneBar);
 }
