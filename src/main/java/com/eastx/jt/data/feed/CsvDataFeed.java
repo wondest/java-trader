@@ -33,7 +33,7 @@ public class CsvDataFeed extends AbstractDataSeries implements DataFeed{
     /**
      * Date format.
      */
-    private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    private final static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * The number of row processed.
@@ -51,12 +51,12 @@ public class CsvDataFeed extends AbstractDataSeries implements DataFeed{
     private static int TOO_MANY_ERRORS = 100;
 
     public CsvDataFeed(int headers, String separator) {
-        this.headers = headers;
+        this.headers = (headers > 0)?headers:0;
         this.separator = separator;
     }
 
-    public CsvDataFeed() {
-        this(1, ",");
+    public CsvDataFeed(int headers) {
+        this(headers, ",");
     }
 
     /**
@@ -65,10 +65,11 @@ public class CsvDataFeed extends AbstractDataSeries implements DataFeed{
      * @return
      */
     private boolean process(Object oneBar) {
+        log.debug(oneBar);
         String[] fields = map(oneBar).split(separator);
 
         try {
-            datetime().append(BoxDouble.dateOf(DateUtil.str2num(fields[0], format)));
+            datetime().append(BoxDouble.dateOf(DateUtil.parse(fields[0], formatter)));
             close().append(BoxDouble.valueOf(fields[1]));
             return true;
         } catch (ParseException e) {

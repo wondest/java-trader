@@ -2,6 +2,7 @@ import com.eastx.jt.data.DataFactory;
 import com.eastx.jt.data.LocalCsvDataFactory;
 import com.eastx.jt.SingleCerebra;
 import com.eastx.jt.data.MockExchangeFactory;
+import com.eastx.jt.data.SortedCacheDataFactory;
 import com.eastx.jt.data.feed.DataSeries;
 import com.eastx.jt.indicator.core.CrossOver;
 import com.eastx.jt.indicator.Indicator;
@@ -88,10 +89,10 @@ public class TestCerebra {
     public static void main(String[] args) {
         DataFactory factory1 = new LocalCsvDataFactory("src/test/resources/trade_000001.SZ.csv");
         DataFactory factory2 = new MockExchangeFactory("src/test/resources/trade_000001.SZ.csv");
+        DataFactory factory3 = new SortedCacheDataFactory("src/test/resources/trade_000001.SZ.csv");
 
         SingleCerebra.builder()
-                .setFactory(factory2)
-                .flow()
+                .setFactory(factory3)
                 .addStrategy(new MyStrategy())
                 .build()
                 .run();

@@ -1,9 +1,12 @@
 package com.eastx.jt.data.source;
 
+import lombok.Data;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.function.Consumer;
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -32,6 +35,19 @@ public class FlatFileDataSource extends AbstractDataSource.Persist {
 
     @Override
     public void start() {
+        open();
+    }
+
+    @Override
+    public void stop() {
+        close();
+    }
+
+    /**
+     * Open the reader
+     */
+    private void open() {
+        //Open the reader
         if(null == reader) {
             try {
                 reader = new BufferedReader(new FileReader(fileName));
@@ -42,8 +58,10 @@ public class FlatFileDataSource extends AbstractDataSource.Persist {
         }
     }
 
-    @Override
-    public void stop() {
+    /**
+     * Close the reader
+     */
+    private void close() {
         if(null != reader) {
             try {
                 reader.close();
@@ -54,30 +72,35 @@ public class FlatFileDataSource extends AbstractDataSource.Persist {
         }
     }
 
+    /**
+     * Ensure the reader is opening
+     */
     private void ensureOpen() {
         checkNotNull(reader, "source is closed");
     }
 
-    private String read() {
-        String ret;
+    /**
+     * Process all
+     * @return
+     */
+    private void process(Consumer feed) {
+        String data;
+        ensureOpen();
+
         try {
-            ensureOpen();
-            ret = reader.readLine();
+            while (null != (data = reader.readLine())) {
+                feed.accept(data);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("read failed");
         }
-
-        return ret;
     }
 
     @Override
     public void forAll(Consumer feed) {
-        String ret;
         start();
-        while(null != (ret = read())) {
-            feed.accept(ret);
-        }
+        process(feed);
         stop();
     }
 }

@@ -9,7 +9,6 @@ import com.eastx.jt.strategy.Strategy;
 import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -21,6 +20,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @Since 1.8
  **/
 public class SingleCerebra {
+    /**
+     * The logger instance.
+     */
     private static Logger log = Logger.getLogger(SingleCerebra.class);
 
     /**

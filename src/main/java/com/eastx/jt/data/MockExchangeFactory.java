@@ -28,7 +28,7 @@ public class MockExchangeFactory implements DataFactory {
 
     @Override
     public DataFeed createFeed() {
-        return new CsvDataFeed();
+        return new CsvDataFeed(1);
     }
 
     @Override
